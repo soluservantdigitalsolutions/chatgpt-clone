@@ -1,0 +1,37 @@
+.home {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+}
+
+.logoText {
+  font-size: 128px;
+  background: linear-gradient(to right, #2ecc40, #39cccc);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.subHomeText {
+  font-weight: 400;
+  max-width: 70%;
+}
+
+.dashboardButton {
+  padding: 15px 25px;
+  background-color: #27a836;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.dashboardButton:hover {
+  background-color: #197724;
+  color: white;
+  transition: all 0.2s;
+}

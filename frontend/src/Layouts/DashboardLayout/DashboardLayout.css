@@ -1,0 +1,16 @@
+.dashboardLayout {
+  display: flex;
+  gap: 50px;
+  padding-top: 20px;
+  height: 100%;
+}
+
+.dashboardMenu {
+  flex: 1;
+}
+
+.dashboardContent {
+  flex: 4;
+  background-color: #12101b;
+}
+
