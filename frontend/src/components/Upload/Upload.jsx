@@ -1,5 +1,7 @@
 import React from "react";
-import { IKContext, IKImage, IKUpload } from "imagekitio-react";
+import { IKContext, IKUpload } from "imagekitio-react";
+import attachment from "../../../Public/images/attachment.png";
+import { useRef } from "react";
 
 const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
 const urlEndpoint = import.meta.env.VITE_IMAGE_KIT_ENDPOINT;
@@ -22,23 +24,25 @@ const authenticator = async () => {
   }
 };
 
-const onError = (err) => {
-  console.log("Error", err);
-};
+const Upload = ({ setImage }) => {
+  const IKUploadRef = useRef(null);
+  const onError = (err) => {
+    console.log("Error", err);
+  };
 
-const onSuccess = (res) => {
-  console.log("Success", res);
-};
+  const onSuccess = (res) => {
+    console.log("Success", res);
+    setImage((prev) => ({ ...prev, isLoading: false, dbData: res }));
+  };
 
-const onUploadProgress = (progress) => {
-  console.log("Progress", progress);
-};
+  const onUploadProgress = (progress) => {
+    console.log("Progress", progress);
+  };
 
-const onUploadStart = (evt) => {
-  console.log("Start", evt);
-};
-
-const Upload = () => {
+  const onUploadStart = (evt) => {
+    console.log("Start", evt);
+    setImage((prev) => ({ ...prev, isLoading: true }));
+  };
   return (
     <>
       <IKContext
@@ -53,7 +57,17 @@ const Upload = () => {
           onUploadProgress={onUploadProgress}
           onUploadStart={onUploadStart}
           useUniqueFileName={true}
+          style={{ display: "none" }}
+          ref={IKUploadRef}
         />
+        {
+          <label
+            className="newFormLabel"
+            onClick={() => IKUploadRef.current.click()}
+          >
+            <img src={attachment} alt="" className="newFormButtonImage" />
+          </label>
+        }
       </IKContext>
     </>
   );

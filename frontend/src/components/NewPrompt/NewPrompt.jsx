@@ -1,10 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import "./NewPrompt.css";
-import attachment from "../../../Public/images/attachment.png";
 import arrow from "../../../Public/images/arrow.png";
 import Upload from "../Upload/Upload";
+import { useState } from "react";
+import { IKImage } from "imagekitio-react";
 
 const NewPrompt = () => {
+  const [image, setImage] = useState({
+    isLoading: false,
+    error: "",
+    dbData: {},
+  });
   const endRef = useRef(null);
 
   useEffect(() => {
@@ -12,9 +18,17 @@ const NewPrompt = () => {
   }, []);
   return (
     <>
+      {image.isLoading && <div>Loading...</div>}
+      {image.dbData?.filePath && (
+        <IKImage
+          urlEndpoint={import.meta.env.VITE_IMAGE_KIT_ENDPOINT}
+          path={image.dbData?.filePath}
+          className="attachmentImage"
+        />
+      )}
       <div ref={endRef} className="endChat"></div>
       <form className="newForm">
-        <Upload />
+        <Upload setImage={setImage} />
         <input type="file" id="file" hidden multiple={false} />
         <input
           type="text"
