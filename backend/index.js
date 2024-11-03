@@ -4,6 +4,7 @@ const port = process.env.PORT || 8081;
 const cors = require("cors");
 
 const ImageKit = require("imagekit");
+const { dbConnect } = require("./dbConnect/db");
 
 const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGE_KIT_ENDPOINT,
@@ -31,5 +32,6 @@ app.get("/api/v1/upload", function (req, res) {
   res.send(result);
 });
 app.listen(port, () => {
+  dbConnect();
   console.log(`Server is running on http://localhost:${port}`);
 });
