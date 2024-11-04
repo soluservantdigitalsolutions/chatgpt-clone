@@ -29,6 +29,11 @@ app.get("/api/v1/upload", function (req, res) {
 
 app.use("/api/v1/chats", chatRoutes);
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(401).send("Unauthenticated!");
+});
+
 app.listen(port, () => {
   dbConnect();
   console.log(`Server is running on http://localhost:${port}`);

@@ -6,11 +6,8 @@ import images from "../../../Public/images/images.png";
 import code from "../../../Public/images/code.png";
 import arrow from "../../../Public/images/arrow.png";
 import { addChat } from "../../../api";
-import { useAuth } from "@clerk/clerk-react";
 
 const Dashboard = () => {
-  const { userId } = useAuth();
-  console.log(userId);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -19,7 +16,7 @@ const Dashboard = () => {
     if (!text) return;
 
     try {
-      await addChat(userId, text);
+      await addChat(text);
     } catch (error) {
       console.log(error);
     }

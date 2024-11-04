@@ -1,10 +1,12 @@
 const { Chat } = require("../models/chat.model");
 const { UserChat } = require("../models/userChat.model");
+const { ClerkExpressRequireAuth } = require("@clerk/clerk-sdk-node");
 
 const router = require("express").Router();
 
-router.post("/", async (req, res) => {
-  const { userId, text } = req.body;
+router.post("/", ClerkExpressRequireAuth(), async (req, res) => {
+  const userId = req.auth.userId;
+  const { text } = req.body;
 
   try {
     const newChat = new Chat({

@@ -5,8 +5,7 @@ const API = axios.create({
   withCredentials: true,
 });
 
-export const addChat = (userId, text) =>
+export const addChat = (text) =>
   API.post("/chats", {
-    userId,
     text,
   });
