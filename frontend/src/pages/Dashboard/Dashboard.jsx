@@ -5,8 +5,25 @@ import chat from "../../../Public/images/chat.png";
 import images from "../../../Public/images/images.png";
 import code from "../../../Public/images/code.png";
 import arrow from "../../../Public/images/arrow.png";
+import { addChat } from "../../../api";
+import { useAuth } from "@clerk/clerk-react";
 
 const Dashboard = () => {
+  const { userId } = useAuth();
+  console.log(userId);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const text = e.target.prompt.value;
+
+    if (!text) return;
+
+    try {
+      await addChat(userId, text);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="dashboard">
       <div className="dashboardTexts">
@@ -30,11 +47,12 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="dashboardFormContainer">
-        <form className="dashboardForm">
+        <form className="dashboardForm" onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Ask me anything..."
             className="dashboardFormInput"
+            name="prompt"
           />
           <button className="dashboardFormButton">
             <img src={arrow} alt="" className="dashboardFormImage" />

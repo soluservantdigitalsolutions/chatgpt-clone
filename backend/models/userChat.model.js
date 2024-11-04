@@ -28,6 +28,6 @@ const userChatModel = new mongoose.Schema(
   }
 );
 
-const userChat = mongoose.model("userChat", userChatModel);
+const UserChat = mongoose.model("userChat", userChatModel);
 
-module.exports = { userChat };
+module.exports = { UserChat };
