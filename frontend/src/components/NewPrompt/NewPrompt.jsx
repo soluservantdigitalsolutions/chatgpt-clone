@@ -53,14 +53,14 @@ const NewPrompt = () => {
       aiData: {},
     });
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  //   const text = e.target.prompt.value;
+    const text = e.target.prompt.value;
 
-  //   if (!text) return;
-  //   runPrompt(text);
-  // };
+    if (!text) return;
+    runPrompt(text);
+  };
   return (
     <>
       {image.isLoading && <div>Loading...</div>}

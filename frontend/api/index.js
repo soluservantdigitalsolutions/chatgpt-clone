@@ -9,3 +9,5 @@ export const addChat = (text) =>
   API.post("/chats", {
     text,
   });
+
+export const fetchUserChats = () => API.get("/chats/user");
