@@ -60,6 +60,18 @@ router.get("/user", ClerkExpressRequireAuth(), async (req, res) => {
     res.status(200).json(userChats[0].chats);
   } catch (error) {
     console.log(error);
+    res.status(500).json("An error occurred fetching UserChats!");
+  }
+});
+
+router.get("/:id", ClerkExpressRequireAuth(), async (req, res) => {
+  const userId = req.auth.userId;
+  try {
+    const chat = await Chat.findOne({ _id: req.params.id, userId });
+    res.status(200).json(chat);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json("An error occurred fetching chat!");
   }
 });
 

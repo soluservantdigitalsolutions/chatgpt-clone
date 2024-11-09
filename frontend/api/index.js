@@ -11,3 +11,5 @@ export const addChat = (text) =>
   });
 
 export const fetchUserChats = () => API.get("/chats/user");
+
+export const fetchChat = (id) => API.get(`/chats/${id}`);
