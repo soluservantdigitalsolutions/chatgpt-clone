@@ -6,8 +6,24 @@ import images from "../../../Public/images/images.png";
 import code from "../../../Public/images/code.png";
 import arrow from "../../../Public/images/arrow.png";
 import { addChat } from "../../../api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: async (text) => {
+      const res = await addChat(text);
+      return res?.data;
+    },
+    onSuccess: (id) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["userChats"] });
+      navigate(`/dashboard/chats/${id}`);
+    },
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -16,7 +32,7 @@ const Dashboard = () => {
     if (!text) return;
 
     try {
-      await addChat(text);
+      mutation.mutate(text)
     } catch (error) {
       console.log(error);
     }
