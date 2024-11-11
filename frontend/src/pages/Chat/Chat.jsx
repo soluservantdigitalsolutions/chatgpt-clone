@@ -19,14 +19,14 @@ const Chat = () => {
     <div className="chatMain">
       <div className="chatWrapper">
         <div className="chat">
-          <div className="message">Test Answer from AI</div>
+          <div className="message"></div>
           {isPending
             ? "Loading..."
             : error
             ? "Something went wrong!"
             : data?.data.history.map((message, i) => (
                 <>
-                  {message.image && (
+                  {message?.image && (
                     <IKImage
                       urlEndpoint={import.meta.env.VITE_IMAGE_KIT_ENDPOINT}
                       path={message.image}
@@ -37,16 +37,16 @@ const Chat = () => {
                   )}
                   <div
                     className={
-                      message.role === "user" ? "message user" : "message"
+                      message?.role === "user" ? "message user" : "message"
                     }
                     key={i}
                   >
-                    <Markdown>{message.parts[0].text}</Markdown>
+                    <Markdown>{message?.parts[0].text}</Markdown>
                   </div>
                 </>
               ))}
 
-          <NewPrompt />
+          {data && <NewPrompt data={data?.data} />}
         </div>
       </div>
     </div>

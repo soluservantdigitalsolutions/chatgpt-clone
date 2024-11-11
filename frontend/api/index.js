@@ -13,3 +13,10 @@ export const addChat = (text) =>
 export const fetchUserChats = () => API.get("/chats/user");
 
 export const fetchChat = (id) => API.get(`/chats/${id}`);
+
+export const updateConversation = (id, question, answer, image) =>
+  API.put(`/chats/${id}`, {
+    question,
+    answer,
+    image,
+  });

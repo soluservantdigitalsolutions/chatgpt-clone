@@ -1,3 +1,4 @@
+const { text } = require("express");
 const { Chat } = require("../models/chat.model");
 const { UserChat } = require("../models/userChat.model");
 const { ClerkExpressRequireAuth } = require("@clerk/clerk-sdk-node");
@@ -72,6 +73,37 @@ router.get("/:id", ClerkExpressRequireAuth(), async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json("An error occurred fetching chat!");
+  }
+});
+
+router.put("/:id", ClerkExpressRequireAuth(), async (req, res) => {
+  const userId = req.auth.userId;
+  const { question, answer, image } = req.body;
+  const newItems = [
+    ...(question
+      ? [{ role: "user", parts: [{ text: question }], ...(image && { image }) }]
+      : []),
+    ,
+    {
+      role: "model",
+      parts: [{ text: answer }],
+    },
+  ];
+  try {
+    const updatedChat = await Chat.updateOne(
+      { _id: req.params.id, userId },
+      {
+        $push: {
+          history: {
+            $each: newItems,
+          },
+        },
+      }
+    );
+    res.status(200).json(updatedChat);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json("An error occurred saving conversation!");
   }
 });
 
